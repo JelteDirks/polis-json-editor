@@ -1,5 +1,7 @@
 #!/opt/homebrew/bin/node
 
+const { sleep } = require("./src/lib");
+
 (async () => {
   const fs = require("node:fs");
   const yargs = require("yargs");
@@ -45,7 +47,6 @@
       "tool te kunnen gebruiken")
     .argv;
 
-  console.dir(argv);
 
   const resolvedFile = path.resolve(argv.file);
 
@@ -85,8 +86,10 @@
 
   let stateNumber = -1;
   let stateHandler = () => { };
+
   let internalState = {
-    JSONObject: JSONObject
+    JSONObject: JSONObject,
+    argv: argv
   };
 
   if ((argv.i & argv.b & argv.s) === 1) {
