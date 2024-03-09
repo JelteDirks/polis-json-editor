@@ -16,17 +16,19 @@ async function cache(internalState) {
   }
 
   clearView();
-  process.stdout.write("Het volgende object is klaar om toegevoegd te worden:\n");
   showStatus(internalState.queuedObject);
-  process.stdout.write("\n\nWil je nog een object toevoegen?\n");
+  process.stdout.write("\n\nBovenstaand object is klaar om toegevoegd te worden.");
+  process.stdout.write("\nj: Ja ik wil nog een object toevoegen");
+  process.stdout.write("\nn: Nee ik wil geen object meer toevoegen");
+  process.stdout.write("\nWil je nog een object toevoegen? (default = j)\n");
 
   const answer = await readOne();
 
-  if (answer.trim() === "j") {
-    return 2;
+  if (answer.trim() === "n") {
+    return 5;
   }
 
-  return 5;
+  return 2;
 }
 
 module.exports = {

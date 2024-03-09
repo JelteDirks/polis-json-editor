@@ -1,4 +1,5 @@
-const { clearView, readLine, readOne, showStatus } = require("../lib");
+const { REGEL_SOORTEN, SOORT_LOOKUP } = require("../constants");
+const { clearView, readLine, readOne, showStatus, sleep } = require("../lib");
 
 async function insert(internalState) {
 
@@ -18,14 +19,19 @@ async function insert(internalState) {
   Object.assign(internalState.queuedObject, { omschrijving: omschrijving.trim() });
   clearView()
   showStatus(internalState.queuedObject);
-  process.stdout.write("\n\nWat is de soort? (default = Standaard)\n");
 
-  const soort = await readLine();
+  Object.keys(REGEL_SOORTEN).forEach((key) => {
+    process.stdout.write(`\n${REGEL_SOORTEN[key]}: ${key}`);
+  });
+  process.stdout.write("\n\nWat is de soort? (default = " +
+    SOORT_LOOKUP["1"] + ")\n");
+
+  const soort = await readOne();
 
   if (soort.trim().length !== 0) {
-    Object.assign(internalState.queuedObject, { soort: soort.trim() });
+    Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP[soort.trim()] });
   } else {
-    Object.assign(internalState.queuedObject, { soort: "Standaard" });
+    Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP["1"] });
   }
 
   clearView()

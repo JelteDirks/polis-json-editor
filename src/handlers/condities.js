@@ -1,4 +1,4 @@
-const { clearView, showStatus, readOne, readLine, sleep } = require("../lib");
+const { clearView, showStatus, readOne, readLine } = require("../lib");
 
 async function condities(internalState) {
   const { i, b, s } = internalState.argv;
@@ -68,7 +68,7 @@ async function maakConditie(flags, internalState) {
     clearView();
     showStatus(conditieObj);
     process.stdout.write("\nWelke maatschappijen wil je toevoegen aan deze " +
-      "conditie? Gebruik een spatie om ze te scheiden.\n");
+      "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld:P302 P353 P380)\n");
 
     let answer = await readLine();
 
@@ -90,14 +90,16 @@ async function maakConditie(flags, internalState) {
   }
 
   clearView();
-  process.stdout.write("\nIs dit correct?\n");
   showStatus(conditieObj);
+  process.stdout.write("\nj: Ja dit conditie object is correct");
+  process.stdout.write("\nn: Nee dit conditie object wil ik opnieuw doen");
+  process.stdout.write("\nIs dit conditie object correct? (default = j)\n");
   let answer = await readOne();
 
-  if (answer.trim() === "j") {
-    internalState.queuedObject.condities.push(conditieObj);
-  } else {
+  if (answer.trim() === "n") {
     return maakConditie(flags, internalState);
+  } else {
+    internalState.queuedObject.condities.push(conditieObj);
   }
 }
 
