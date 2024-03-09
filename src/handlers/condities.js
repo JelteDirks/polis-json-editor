@@ -1,4 +1,4 @@
-const { clearView, showStatus, readOne, readLine } = require("../lib");
+const { clearView, showStatus, readOne, readLine, sleep } = require("../lib");
 
 async function condities(internalState) {
   const { i, b, s } = internalState.argv;
@@ -80,7 +80,7 @@ async function maakConditie(flags, internalState) {
   // only quick fill is supported for now
   if (flags.indexOf("l") > -1) {
     Object.assign(conditieObj, {
-      labels: "voor nu even dit"
+      labels: extractLabels(internalState)
     });
   }
 
@@ -99,6 +99,42 @@ async function maakConditie(flags, internalState) {
   } else {
     return maakConditie(flags, internalState);
   }
+}
+
+function extractLabels(internalState) {
+  const { omschrijving, inhoud } = internalState.queuedObject;
+  const labels = [];
+
+  console.log("omschrijving", omschrijving);
+  console.log("inhoud", inhoud);
+
+  if (typeof omschrijving === "string") {
+    let ol = getlabels(omschrijving);
+    labels.splice(labels.length, 0, ...ol);
+  }
+
+  if (typeof inhoud === "string") {
+    let il = getlabels(inhoud);
+    labels.splice(labels.length, 0, ...il);
+  }
+
+  console.log("labels concatenated", labels);
+
+  return labels;
+}
+
+let pattern = new RegExp("[dr]?[0-9]{5}[oc]?", "g")
+
+function getlabels(str) {
+  const labels = str.match(pattern);
+
+  if (labels === null) {
+    return [];
+  }
+
+  console.log("==", labels);
+
+  return labels;
 }
 
 
