@@ -41,9 +41,20 @@ async function sleep(ms) {
   });
 }
 
+function showStatus(regel) {
+  process.stdout.write("Huidig object: \n");
+  process.stdout.write(JSON.stringify(regel, null, 2));
+}
+
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 module.exports = {
   sleep,
   readOne,
   readLine,
-  clearView
+  clearView,
+  showStatus,
+  deepClone
 };

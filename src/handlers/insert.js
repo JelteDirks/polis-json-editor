@@ -1,53 +1,55 @@
-const { clearView, readLine, readOne } = require("../lib");
+const { clearView, readLine, readOne, showStatus } = require("../lib");
 
 async function insert(internalState) {
 
   if (!internalState.insertAt) {
-    return 1; // go back to creating insertion point
+    console.error("should have internalState.insertAt");
+    process.exit();
   }
 
   clearView();
-  const regel = {};
+
+  internalState.queuedObject = {};
 
   process.stdout.write("Wat is de omschrijving van de regel?\n");
 
   const omschrijving = await readLine();
 
-  Object.assign(regel, { omschrijving: omschrijving.trim() });
+  Object.assign(internalState.queuedObject, { omschrijving: omschrijving.trim() });
   clearView()
-  showStatus(regel);
+  showStatus(internalState.queuedObject);
   process.stdout.write("\n\nWat is de soort? (default = Standaard)\n");
 
   const soort = await readLine();
 
   if (soort.trim().length !== 0) {
-    Object.assign(regel, { soort: soort.trim() });
+    Object.assign(internalState.queuedObject, { soort: soort.trim() });
   } else {
-    Object.assign(regel, { soort: "Standaard" });
+    Object.assign(internalState.queuedObject, { soort: "Standaard" });
   }
 
   clearView()
-  showStatus(regel);
+  showStatus(internalState.queuedObject);
   process.stdout.write("\n\nWat is de dekking? (default = geen dekking)\n");
 
   const dekking = await readLine();
 
   if (dekking.trim().length !== 0) {
-    Object.assign(regel, { dekking: dekking.trim() });
+    Object.assign(internalState.queuedObject, { dekking: dekking.trim() });
   }
 
   clearView();
-  showStatus(regel);
+  showStatus(internalState.queuedObject);
   process.stdout.write("\n\nWat is de inhoud? (default = lege inhoud)\n");
 
   const inhoud = await readLine();
 
   if (inhoud.trim().length !== 0) {
-    Object.assign(regel, { inhoud: inhoud.trim() });
+    Object.assign(internalState.queuedObject, { inhoud: inhoud.trim() });
   }
 
   clearView();
-  showStatus(regel);
+  showStatus(internalState.queuedObject);
 
   process.stdout.write("\n\nWil je condities toevoegen?\n");
 
@@ -58,11 +60,6 @@ async function insert(internalState) {
   }
 
   return 4;
-}
-
-function showStatus(regel) {
-  process.stdout.write("Huidig object: \n");
-  process.stdout.write(JSON.stringify(regel, null, 2));
 }
 
 module.exports = {
