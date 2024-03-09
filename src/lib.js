@@ -42,7 +42,7 @@ async function sleep(ms) {
 }
 
 function showStatus(regel) {
-  process.stdout.write("Huidig object: \n");
+  process.stdout.write("Huidig object:\n");
   process.stdout.write(JSON.stringify(regel, null, 2));
 }
 

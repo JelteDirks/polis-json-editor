@@ -2,6 +2,7 @@ const { navigate } = require("./handlers/navigate.js");
 const { insert } = require("./handlers/insert.js");
 const { cache } = require("./handlers/cache.js");
 const { saveToFile } = require("./handlers/saveToFile.js");
+const { condities } = require("./handlers/condities.js");
 
 const stateLibrary = [
   {
@@ -11,6 +12,10 @@ const stateLibrary = [
   {
     id: 2,
     handler: insert
+  },
+  {
+    id: 3,
+    handler: condities
   },
   {
     id: 4,
