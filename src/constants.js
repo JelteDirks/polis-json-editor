@@ -1,0 +1,13 @@
+const DIRECTION = {
+  BEFORE: 0,
+  AFTER: 1,
+};
+
+const ESCAPE_SEQUENCE = {
+  CLEAR_TERM: "\x1Bc"
+};
+
+module.exports = {
+  DIRECTION: DIRECTION,
+  ESCAPE_SEQUENCE: ESCAPE_SEQUENCE
+};

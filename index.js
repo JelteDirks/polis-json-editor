@@ -5,7 +5,7 @@
   const yargs = require("yargs");
   const { hideBin } = require("yargs/helpers");
   const path = require("path");
-  const { sleep, nextHandler } = require("./src/lib.js");
+  const { nextHandler } = require("./src/handlers");
 
 
   const argv = yargs(hideBin(process.argv))
@@ -79,26 +79,34 @@
     process.exit(5);
   }
 
-  const fileBuffer = require(resolvedFile);
+  const JSONObject = require(resolvedFile);
 
   let safety = 10;
 
   let stateNumber = -1;
   let stateHandler = () => { };
+  let internalState = {
+    JSONObject: JSONObject
+  };
+
   if ((argv.i & argv.b & argv.s) === 1) {
-    ({ internalState: id, handler: stateHandler } = nextHandler(1)); // start with navigation
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(1)); // start with navigation
   }
 
   while (1) {
     safety--;
 
-    stateNumber = await stateHandler();
+    stateNumber = await stateHandler(internalState);
+
+    console.dir(internalState);
 
     if (safety < 0) {
       console.warn("Safety loop break reached");
       break;
     }
+
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(stateNumber)); // start with navigation
   }
 
-  console.log(JSON.stringify(fileBuffer, null, 2).slice(0, 100));
+  console.log(JSON.stringify(JSONObject, null, 2).slice(0, 100));
 })();

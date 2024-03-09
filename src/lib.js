@@ -1,12 +1,19 @@
-async function navigate() {
-  for (let i = 0; i < 2; i++) {
-    await sleep(2000);
-    console.log("navigating...");
-  }
+async function readOne() {
+  return new Promise((resolve) => {
+    process.stdin.setEncoding("utf8");
+    process.stdin.setRawMode(true);
+    const onData = async (data) => {
+      if (data === '\u0003') {
+        process.exit();
+      }
+      process.stdin.removeListener("data", onData);
+      process.stdin.setRawMode(false);
+      resolve(data);
+    };
 
-  return 2;
+    process.stdin.on("data", onData);
+  });
 }
-
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -14,25 +21,7 @@ async function sleep(ms) {
   });
 }
 
-const stateLibrary = [
-  {
-    id: 1,
-    handler: navigate
-  }
-];
-
-function nextHandler(id) {
-  for (let i = 0; i < stateLibrary.length; i++) {
-    if (stateLibrary[i].id === id) {
-      return stateLibrary[i];
-    }
-  }
-
-  console.error("geen state met id:", id);
-  process.exit(22);
-}
-
 module.exports = {
   sleep: sleep,
-  nextHandler: nextHandler
+  readOne: readOne
 };
