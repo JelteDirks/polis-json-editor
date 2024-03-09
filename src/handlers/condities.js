@@ -68,7 +68,7 @@ async function maakConditie(flags, internalState) {
     clearView();
     showStatus(conditieObj);
     process.stdout.write("\nWelke maatschappijen wil je toevoegen aan deze " +
-      "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld:P302 P353 P380)\n");
+      "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: P302 P353 P380)\n");
 
     let answer = await readLine();
 
@@ -77,8 +77,45 @@ async function maakConditie(flags, internalState) {
     });
   }
 
-  if (flags.indexOf("l") > -1) {
+  if (flags.indexOf("d") > -1) {
+    clearView();
+    showStatus(conditieObj);
+    process.stdout.write("\nWelke dekkingen wil je toevoegen aan deze " +
+      "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: 02030 02031)\n");
 
+    let answer = await readLine();
+
+    Object.assign(conditieObj, {
+      dekkingen: answer.trim().split(" ")
+    });
+  }
+
+  if (flags.indexOf("b") > -1) {
+    clearView();
+    showStatus(conditieObj);
+    process.stdout.write("\nWelke branches wil je toevoegen aan deze " +
+      "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: 01010 01100)\n");
+
+    let answer = await readLine();
+
+    Object.assign(conditieObj, {
+      branches: answer.trim().split(" ")
+    });
+  }
+
+  if (flags.indexOf("w") > -1) {
+    clearView();
+    showStatus(conditieObj);
+    process.stdout.write("\nWelke waardes wil je toevoegen aan deze " +
+      "conditie? Gebruik een | om de waardes te scheiden. " +
+      "(Voorbeeld: 0,00|Zie polisvoorwaarden|Deez nuts)\n");
+    let answer = await readLine();
+    Object.assign(conditieObj, {
+      waardes: answer.trim().split("|")
+    });
+  }
+
+  if (flags.indexOf("l") > -1) {
     clearView()
     showStatus(conditieObj);
     process.stdout.write("\nj: Ja ik wil de labels automatisch laten vullen");
@@ -91,7 +128,7 @@ async function maakConditie(flags, internalState) {
 
     if (answer.trim() === "n") {
       process.stdout.write("Ok, voer de labels in met een spatie ertussen. " +
-        "(voorbeeld:10142o 10039 10001c)");
+        "(voorbeeld:10142o 10039 10001c)\n");
 
       let answer = await readLine();
 

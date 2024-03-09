@@ -1,5 +1,5 @@
 const { REGEL_SOORTEN, SOORT_LOOKUP } = require("../constants");
-const { clearView, readLine, readOne, showStatus, sleep } = require("../lib");
+const { clearView, readLine, readOne, showStatus } = require("../lib");
 
 async function insert(internalState) {
 
