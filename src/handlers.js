@@ -1,9 +1,14 @@
 const { navigate } = require("./handlers/navigate.js");
+const { insert } = require("./handlers/insert.js");
 
 const stateLibrary = [
   {
     id: 1,
     handler: navigate
+  },
+  {
+    id: 2,
+    handler: insert
   }
 ];
 
@@ -19,6 +24,5 @@ function nextHandler(id) {
 }
 
 module.exports = {
-  navigate: navigate,
   nextHandler: nextHandler
 };

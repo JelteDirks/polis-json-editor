@@ -98,8 +98,6 @@
 
     stateNumber = await stateHandler(internalState);
 
-    console.dir(internalState);
-
     if (safety < 0) {
       console.warn("Safety loop break reached");
       break;
