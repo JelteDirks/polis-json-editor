@@ -23,8 +23,7 @@ async function insert(internalState) {
   Object.keys(REGEL_SOORTEN).forEach((key) => {
     process.stdout.write(`\n${REGEL_SOORTEN[key]}: ${key}`);
   });
-  process.stdout.write("\n\nWat is de soort? (default = " +
-    SOORT_LOOKUP["1"] + ")\n");
+  process.stdout.write("\n\nWat is de soort? (default = 1)\n");
 
   const soort = await readOne();
 

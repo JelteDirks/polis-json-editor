@@ -77,15 +77,37 @@ async function maakConditie(flags, internalState) {
     });
   }
 
-  // only quick fill is supported for now
   if (flags.indexOf("l") > -1) {
-    Object.assign(conditieObj, {
-      labels: extractLabels(internalState)
-    });
+
+    clearView()
+    showStatus(conditieObj);
+    process.stdout.write("\nj: Ja ik wil de labels automatisch laten vullen");
+    process.stdout.write("\nn: Nee ik wil zelf de labels invoeren");
+    process.stdout.write("\nWil je zelf de labels invullen of wil je de " +
+      "labels automatisch uit de omschrijving / inhoud halen?" +
+      " (default = j)\n");
+
+    let answer = await readOne();
+
+    if (answer.trim() === "n") {
+      process.stdout.write("Ok, voer de labels in met een spatie ertussen. " +
+        "(voorbeeld:10142o 10039 10001c)");
+
+      let answer = await readLine();
+
+      Object.assign(conditieObj, {
+        labels: answer.trim().split(" ")
+      });
+
+    } else {
+      Object.assign(conditieObj, {
+        labels: extractLabels(internalState)
+      });
+    }
   }
 
-  // only quick fill is supported for now
   if (flags.indexOf("o") > -1) {
+    // is alleen nuttig als het true is
     Object.assign(conditieObj, { omgedraaid: true });
   }
 
