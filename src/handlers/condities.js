@@ -148,18 +148,20 @@ async function maakConditie(flags, internalState) {
     Object.assign(conditieObj, { omgedraaid: true });
   }
 
-  clearView();
-  showStatus(conditieObj);
-  process.stdout.write("\nj: Ja dit conditie object is correct");
-  process.stdout.write("\nn: Nee dit conditie object wil ik opnieuw doen");
-  process.stdout.write("\nIs dit conditie object correct? (default = j)\n");
-  let answer = await readOne();
+  if (internalState.argv.b === false) { // don't do this for basic mode
+    clearView();
+    showStatus(conditieObj);
+    process.stdout.write("\nj: Ja dit conditie object is correct");
+    process.stdout.write("\nn: Nee dit conditie object wil ik opnieuw doen");
+    process.stdout.write("\nIs dit conditie object correct? (default = j)\n");
+    let answer = await readOne();
 
-  if (answer.trim() === "n") {
-    return maakConditie(flags, internalState);
-  } else {
-    internalState.queuedObject.condities.push(conditieObj);
+    if (answer.trim() === "n") {
+      return maakConditie(flags, internalState);
+    }
   }
+
+  internalState.queuedObject.condities.push(conditieObj);
 }
 
 function extractLabels(internalState) {
