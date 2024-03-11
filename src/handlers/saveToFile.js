@@ -1,4 +1,4 @@
-const { writeFileSync } = require("node:fs");
+const { writeFileSync, unlink, unlinkSync } = require("node:fs");
 const { clearView, readOne } = require("../lib");
 const path = require("node:path");
 
@@ -32,8 +32,15 @@ async function saveToFile(internalState) {
     });
 
     console.log("Bestand overschreven:", internalState.argv.file);
-    process.exit();
   }
+
+  unlinkSync(internalState.cacheFile, (err) => {
+    if (err) {
+      console.error("problem removing cached file after saving");
+      console.error(err);
+      process.exit(10);
+    }
+  });
 
 }
 

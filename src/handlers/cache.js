@@ -1,4 +1,6 @@
+const { writeFile } = require("node:fs");
 const { clearView, showStatus, readOne, deepClone } = require("../lib");
+const path = require("node:path");
 
 async function cache(internalState) {
   if (!internalState.queuedObject) {
@@ -21,6 +23,18 @@ async function cache(internalState) {
   process.stdout.write("\nj: Ja ik wil nog een object toevoegen");
   process.stdout.write("\nn: Nee ik wil geen object meer toevoegen");
   process.stdout.write("\nWil je nog een object toevoegen? (default = j)\n");
+
+  internalState.cacheFile = path.resolve(internalState.argv.file + ".cache");
+
+  const data = JSON.stringify(internalState.cachedObjects);
+
+  writeFile(internalState.cacheFile, data, (err) => {
+    if (err) {
+      console.error("problem saving cache file, this was not done correctly");
+      console.error(err);
+      process.exit(9);
+    }
+  });
 
   const answer = await readOne();
 
