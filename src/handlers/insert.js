@@ -27,7 +27,7 @@ async function insert(internalState) {
 
   const soort = await readOne();
 
-  if (soort.trim().length !== 0) {
+  if ((soort.trim().length !== 0) && (typeof SOORT_LOOKUP[soort.trim()] === "string")) {
     Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP[soort.trim()] });
   } else {
     Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP["1"] });
@@ -45,7 +45,7 @@ async function insert(internalState) {
 
   clearView();
   showStatus(internalState.queuedObject);
-  process.stdout.write("\n\nWat is de inhoud? (default = lege inhoud)\n");
+  process.stdout.write("\n\nWat is de inhoud? (default = geen inhoud)\n");
 
   const inhoud = await readLine();
 
