@@ -55,7 +55,8 @@ async function insert(internalState) {
 
   clearView();
   showStatus(internalState.queuedObject);
-
+  process.stdout.write("\nj: Ja ik wil condities toevoegen");
+  process.stdout.write("\nn: Nee ik wil geen condities toevoegen");
   process.stdout.write("\n\nWil je condities toevoegen?\n");
 
   const answer = await readOne();
