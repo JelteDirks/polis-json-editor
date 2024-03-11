@@ -168,9 +168,6 @@ function extractLabels(internalState) {
   const { omschrijving, inhoud } = internalState.queuedObject;
   const labels = [];
 
-  console.log("omschrijving", omschrijving);
-  console.log("inhoud", inhoud);
-
   if (typeof omschrijving === "string") {
     let ol = getlabels(omschrijving);
     labels.splice(labels.length, 0, ...ol);
@@ -180,8 +177,6 @@ function extractLabels(internalState) {
     let il = getlabels(inhoud);
     labels.splice(labels.length, 0, ...il);
   }
-
-  console.log("labels concatenated", labels);
 
   return labels;
 }
@@ -194,8 +189,6 @@ function getlabels(str) {
   if (labels === null) {
     return [];
   }
-
-  console.log("==", labels);
 
   return labels;
 }
