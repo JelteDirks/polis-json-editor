@@ -12,14 +12,36 @@ async function insert(internalState) {
 
   internalState.queuedObject = {};
 
-  process.stdout.write("Wat is de omschrijving van de regel?\n");
-
-  const omschrijving = await readLine();
-
-  Object.assign(internalState.queuedObject, { omschrijving: omschrijving.trim() });
   clearView()
   showStatus(internalState.queuedObject);
+  process.stdout.write("\nc: condities");
+  process.stdout.write("\nd: dekking");
+  process.stdout.write("\ni: inhoud");
+  process.stdout.write("\no: omschrijving");
+  process.stdout.write("\ne: extraOmschrijving");
+  process.stdout.write("\nWelke eigenschappen wil je toevoegen? " +
+    "Voer de letters in van de eigenschappen en druk op enter." +
+    " Soort wordt altijd toegevoegd. (default = cio)\n");
 
+  let answer = await readLine();
+  let props = "cio";
+
+  if (answer.trim().length !== 0) {
+    props = answer;
+  }
+
+  if (props.indexOf("o") > -1) {
+    clearView();
+    showStatus(internalState.queuedObject);
+    process.stdout.write("\nWat is de omschrijving van de regel?\n");
+
+    const omschrijving = await readLine();
+
+    Object.assign(internalState.queuedObject, { omschrijving: omschrijving.trim() });
+  }
+
+  clearView()
+  showStatus(internalState.queuedObject);
   Object.keys(REGEL_SOORTEN).forEach((key) => {
     process.stdout.write(`\n${REGEL_SOORTEN[key]}: ${key}`);
   });
@@ -33,45 +55,44 @@ async function insert(internalState) {
     Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP["1"] });
   }
 
-  clearView()
-  showStatus(internalState.queuedObject);
-  process.stdout.write("\n\nWat is de dekking? (default = geen dekking)\n");
+  if (props.indexOf("d") > -1) {
+    clearView()
+    showStatus(internalState.queuedObject);
+    process.stdout.write("\n\nWat is de dekking? (default = geen dekking)\n");
 
-  const dekking = await readLine();
+    const dekking = await readLine();
 
-  if (dekking.trim().length !== 0) {
-    Object.assign(internalState.queuedObject, { dekking: dekking.trim() });
+    if (dekking.trim().length !== 0) {
+      Object.assign(internalState.queuedObject, { dekking: dekking.trim() });
+    }
   }
 
-  clearView();
-  showStatus(internalState.queuedObject);
-  process.stdout.write("\n\nWat is de inhoud? (default = geen inhoud)\n");
+  if (props.indexOf("i") > -1) {
+    clearView();
+    showStatus(internalState.queuedObject);
+    process.stdout.write("\n\nWat is de inhoud? (default = geen inhoud)\n");
 
-  const inhoud = await readLine();
+    const inhoud = await readLine();
 
-  if (inhoud.trim().length !== 0) {
-    Object.assign(internalState.queuedObject, { inhoud: inhoud.trim() });
+    if (inhoud.trim().length !== 0) {
+      Object.assign(internalState.queuedObject, { inhoud: inhoud.trim() });
+    }
   }
 
-  clearView();
-  showStatus(internalState.queuedObject);
-  process.stdout.write("\nWat is de extraOmschrijving? (default = geen extraOmschrijving)\n");
+  if (props.indexOf("e") > -1) {
 
-  const extraOmschrijving = await readLine();
+    clearView();
+    showStatus(internalState.queuedObject);
+    process.stdout.write("\nWat is de extraOmschrijving? (default = geen extraOmschrijving)\n");
 
-  if (extraOmschrijving.trim().length !== 0) {
-    Object.assign(internalState.queuedObject, { extraOmschrijving: extraOmschrijving.trim() });
+    const extraOmschrijving = await readLine();
+
+    if (extraOmschrijving.trim().length !== 0) {
+      Object.assign(internalState.queuedObject, { extraOmschrijving: extraOmschrijving.trim() });
+    }
   }
 
-  clearView();
-  showStatus(internalState.queuedObject);
-  process.stdout.write("\nj: Ja ik wil condities toevoegen");
-  process.stdout.write("\nn: Nee ik wil geen condities toevoegen");
-  process.stdout.write("\n\nWil je condities toevoegen?\n");
-
-  const answer = await readOne();
-
-  if (answer.trim() === "j") {
+  if (props.indexOf("c") > -1) { // conditions shouuld be added
     return 3;
   }
 
