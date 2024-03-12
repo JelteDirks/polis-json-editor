@@ -13,12 +13,28 @@ function createClI(argv) {
       yargs.option("insert-mode", {
         alias: "i",
         type: "boolean",
-        describe: "In insert mode kunnen alleen nieuwe JSON regels toegevoegd worden."
+        describe: "In insert mode kunnen alleen nieuwe JSON regels " +
+          "toegevoegd worden. Bestaande regels kunnen dus niet gewijzigd worden."
       });
       yargs.option("sequential", {
         alias: "s",
         type: "boolean",
-        describe: "Sequential inserts betekent dan alle JSON regel object in de volgorde toegevoegd worden waarin ze worden opgegeven in de editor."
+        describe: "Sequential inserts betekent dan alle JSON regel object in" +
+          "de volgorde toegevoegd worden waarin ze worden opgegeven in " +
+          "de editor. Volg de instructies van de editor om naar de juiste plek" +
+          " te gaan om regels toe te voegen."
+      });
+      yargs.option("default-properties", {
+        type: "string",
+        describe: "Default properties zijn de eigenschappen binnen een regel object" +
+          " waarvan die als default toegevoegd worden. Dit betekent dat bij de vraag voor" +
+          " het invoeren van de eigenschappen op enter geduwd kan worden zonder iets in te" +
+          " vullen, en dan zullen deze opties gekozen zijn. De keuzes zijn gelijk aan de" +
+          " keuzes in het keuzemenu voor deze vraag:" +
+          "\n- o: omschrijving\n- e: extraOmschrijving\n- c: condities" +
+          "\n- i: inhoud\n- d: dekking" +
+          "\nEen combinatie van bovenstaande opties is mogelijk. Als de default" +
+          " eigenschappen omschrijving en inhoud moeten zijn, kan dus 'oi' ingevoerd worden."
       });
     })
     .command("create <file>", "Maak een nieuw bestand", (yargs) => {

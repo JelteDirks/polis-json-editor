@@ -8,7 +8,10 @@ async function insert(internalState) {
     process.exit();
   }
 
-  clearView();
+  let props = "cio";
+  if (typeof internalState.argv.defaultProperties === "string") {
+    props = internalState.argv.defaultProperties
+  }
 
   internalState.queuedObject = {};
 
@@ -21,10 +24,9 @@ async function insert(internalState) {
   process.stdout.write("\ne: extraOmschrijving");
   process.stdout.write("\nWelke eigenschappen wil je toevoegen? " +
     "Voer de letters in van de eigenschappen en druk op enter." +
-    " Soort wordt altijd toegevoegd. (default = cio)\n");
+    " Soort wordt altijd toegevoegd. (default = " + props + ")\n");
 
   let answer = await readLine();
-  let props = "cio";
 
   if (answer.trim().length !== 0) {
     props = answer;
