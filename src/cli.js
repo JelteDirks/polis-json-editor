@@ -15,11 +15,6 @@ function createClI(argv) {
         type: "boolean",
         describe: "In insert mode kunnen alleen nieuwe JSON regels toegevoegd worden."
       });
-      yargs.option("basic-inserts", {
-        alias: "b",
-        type: "boolean",
-        describe: "Met basic inserts kunnen alleen de volgende eigenschappen toegevoegd worden aan een JSON regel: omschrijving, soort, inhoud, dekking, condities. De condities zijn ook gelimiteerd om het process te versnellen."
-      });
       yargs.option("sequential", {
         alias: "s",
         type: "boolean",
@@ -67,7 +62,7 @@ function validateCLIInput(resolvedFile, argv) {
     process.exit(4);
   }
 
-  if ((argv.i & argv.b & argv.s) === 0) {
+  if ((argv.i & argv.s) === 0) {
     console.error("Momenteel is alleen nog een insert-mode, basic-inserts " +
       "en sequential toegestaan, voeg '-ibs' toe aan het commando.");
     process.exit(5);

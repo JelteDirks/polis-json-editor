@@ -20,7 +20,7 @@
     argv: argv
   };
 
-  if ((argv.i & argv.b & argv.s) === 1) {
+  if ((argv.i & argv.s) === 1) {
     ({ stateNumber: id, handler: stateHandler } = nextHandler(1)); // start with navigation
   }
 
