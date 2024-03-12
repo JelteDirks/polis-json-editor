@@ -3,26 +3,28 @@ const { insert } = require("./handlers/insert.js");
 const { cache } = require("./handlers/cache.js");
 const { saveToFile } = require("./handlers/saveToFile.js");
 const { condities } = require("./handlers/condities.js");
+const { HANDLERS } = require("./constants.js");
+
 
 const stateLibrary = [
   {
-    id: 1,
+    id: HANDLERS.NAVIGATE,
     handler: navigate
   },
   {
-    id: 2,
+    id: HANDLERS.INSERT,
     handler: insert
   },
   {
-    id: 3,
+    id: HANDLERS.CONDITIES,
     handler: condities
   },
   {
-    id: 4,
+    id: HANDLERS.CACHE,
     handler: cache
   },
   {
-    id: 5,
+    id: HANDLERS.SAVETOFILE,
     handler: saveToFile
   }
 ];

@@ -1,6 +1,7 @@
-const { writeFileSync, unlink, unlinkSync } = require("node:fs");
+const { writeFileSync, unlinkSync } = require("node:fs");
 const { clearView, readOne } = require("../lib");
 const path = require("node:path");
+const { HANDLERS } = require("../constants");
 
 async function saveToFile(internalState) {
   clearView();
@@ -42,6 +43,7 @@ async function saveToFile(internalState) {
     }
   });
 
+  return HANDLERS.NAVIGATE;
 }
 
 module.exports = {

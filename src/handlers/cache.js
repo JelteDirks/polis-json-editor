@@ -1,6 +1,7 @@
 const { writeFile } = require("node:fs");
 const { clearView, showStatus, readOne, deepClone } = require("../lib");
 const path = require("node:path");
+const { HANDLERS } = require("../constants");
 
 async function cache(internalState) {
   if (!internalState.queuedObject) {
@@ -39,10 +40,10 @@ async function cache(internalState) {
   const answer = await readOne();
 
   if (answer.trim() === "n") {
-    return 5;
+    return HANDLERS.SAVETOFILE;
   }
 
-  return 2;
+  return HANDLERS.INSERT;
 }
 
 module.exports = {

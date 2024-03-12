@@ -1,4 +1,4 @@
-const { REGEL_SOORTEN, SOORT_LOOKUP } = require("../constants");
+const { REGEL_SOORTEN, SOORT_LOOKUP, HANDLERS } = require("../constants");
 const { clearView, readLine, readOne, showStatus } = require("../lib");
 
 async function insert(internalState) {
@@ -93,10 +93,10 @@ async function insert(internalState) {
   }
 
   if (props.indexOf("c") > -1) { // conditions shouuld be added
-    return 3;
+    return HANDLERS.CONDITIES;
   }
 
-  return 4;
+  return HANDLERS.CACHE;
 }
 
 module.exports = {

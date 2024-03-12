@@ -1,3 +1,4 @@
+const { HANDLERS } = require("../constants");
 const { clearView, showStatus, readOne, readLine } = require("../lib");
 
 async function condities(internalState) {
@@ -58,7 +59,7 @@ async function condities(internalState) {
     }
   }
 
-  return 4;
+  return HANDLERS.CACHE;
 }
 
 async function maakConditie(flags, internalState) {

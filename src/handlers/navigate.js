@@ -1,4 +1,4 @@
-const { DIRECTION, ESCAPE_SEQUENCE } = require("../constants.js");
+const { DIRECTION, ESCAPE_SEQUENCE, HANDLERS } = require("../constants.js");
 const { readOne } = require("../lib.js");
 
 async function navigate(internalState) {
@@ -37,7 +37,7 @@ async function navigate(internalState) {
       Object.assign(internalState, {
         insertAt: { direction: DIRECTION.AFTER, index: i }
       });
-      return 2;
+      return HANDLERS.INSERT;
     } else if (answer.startsWith("l")) {
       i = i + 1; // next index
       continue;
@@ -50,7 +50,7 @@ async function navigate(internalState) {
     }
   }
 
-  return 2;
+  return HANDLERS.INSERT;
 }
 
 module.exports = {
