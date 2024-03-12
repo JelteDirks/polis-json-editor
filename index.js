@@ -82,8 +82,6 @@ const { sleep } = require("./src/lib");
 
   const JSONObject = require(resolvedFile);
 
-  let safety = 10;
-
   let stateNumber = -1;
   let stateHandler = () => { };
 
@@ -97,16 +95,8 @@ const { sleep } = require("./src/lib");
   }
 
   while (1) {
-    safety--;
-
     stateNumber = await stateHandler(internalState);
-
-    if (safety < 0) {
-      console.warn("Safety loop break reached");
-      break;
-    }
-
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(stateNumber)); // start with navigation
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(stateNumber));
   }
 
   console.log(JSON.stringify(JSONObject, null, 2).slice(0, 100));
