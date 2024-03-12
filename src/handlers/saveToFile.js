@@ -43,6 +43,9 @@ async function saveToFile(internalState) {
     }
   });
 
+  // reset cached objects after they are saved to file
+  internalState.cachedObjects = [];
+
   return HANDLERS.NAVIGATE;
 }
 
