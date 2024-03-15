@@ -1,20 +1,20 @@
 {
-    "regels": [
-        {
-            "bestand": "/bouwstenen/contractgegevens.json",
-            "soort": "JSON"
-        },
-        {
-            "bestand": "/bouwstenen/polisvoorwaarden.json",
-            "soort": "JSON"
-        },
-        {
-            "bestand": "/bouwstenen/premieberekening.json",
-            "soort": "JSON"
-        },
-        {
-            "bestand": "/bouwstenen/ondertekening.json",
-            "soort": "JSON"
-        }
-    ]
+  "regels": [
+    {
+      "bestand": "/bouwstenen/contractgegevens.json",
+      "soort": "JSON"
+    },
+    {
+      "bestand": "/bouwstenen/polisvoorwaarden.json",
+      "soort": "JSON"
+    },
+    {
+      "bestand": "/bouwstenen/premieberekening.json",
+      "soort": "JSON"
+    },
+    {
+      "bestand": "/bouwstenen/ondertekening.json",
+      "soort": "JSON"
+    }
+  ]
 }
