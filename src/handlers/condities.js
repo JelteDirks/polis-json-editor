@@ -2,13 +2,6 @@ const { HANDLERS } = require("../constants");
 const { clearView, showStatus, readOne, readLine } = require("../lib");
 
 async function condities(internalState) {
-  const { i, b, s } = internalState.argv;
-
-  if ((i & b & s) !== 1) {
-    console.error("only support -i -b -s");
-    process.exit();
-  }
-
   Object.assign(internalState.queuedObject, {
     condities: []
   });
