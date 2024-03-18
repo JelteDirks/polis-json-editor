@@ -104,12 +104,6 @@ function validateCLIInput(argv) {
       process.exit(52);
     }
   }
-
-  if ((argv.i & argv.s) === 0) {
-    console.error("Momenteel is alleen nog een insert-mode, basic-inserts " +
-      "en sequential toegestaan, voeg '-ibs' toe aan het commando.");
-    process.exit(5);
-  }
 }
 
 module.exports = {

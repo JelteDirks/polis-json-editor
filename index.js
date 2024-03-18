@@ -1,9 +1,11 @@
 #!/opt/homebrew/bin/node
 
+const { HANDLERS } = require("./src/constants");
+
 (async () => {
   const { createClI, validateCLIInput } = require("./src/cli");
   const path = require("node:path");
-  const { statSync, readFileSync } = require("node:fs");
+  const { readFileSync } = require("node:fs");
   const { nextHandler } = require("./src/handlers");
 
   const argv = createClI(process.argv)
@@ -40,7 +42,9 @@
   }
 
   if ((argv.i & argv.s) === 1) {
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(1)); // start with navigation
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.NAVIGATE));
+  } else {
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.CHOOSE_MODE));
   }
 
   while (1) {

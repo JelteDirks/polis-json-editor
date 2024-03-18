@@ -4,6 +4,7 @@ const { cache } = require("./handlers/cache.js");
 const { saveToFile } = require("./handlers/saveToFile.js");
 const { condities } = require("./handlers/condities.js");
 const { HANDLERS } = require("./constants.js");
+const { chooseMode } = require("./handlers/chooseMode.js");
 
 
 const stateLibrary = [
@@ -26,6 +27,10 @@ const stateLibrary = [
   {
     id: HANDLERS.SAVETOFILE,
     handler: saveToFile
+  },
+  {
+    id: HANDLERS.CHOOSE_MODE,
+    handler: chooseMode
   }
 ];
 

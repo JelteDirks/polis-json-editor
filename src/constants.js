@@ -30,7 +30,8 @@ const HANDLERS = {
   INSERT: 2,
   CONDITIES: 3,
   CACHE: 4,
-  SAVETOFILE: 5
+  SAVETOFILE: 5,
+  CHOOSE_MODE: 6,
 };
 
 module.exports = {
