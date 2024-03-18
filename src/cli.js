@@ -31,7 +31,7 @@ function createClI(argv) {
           " het invoeren van de eigenschappen op enter geduwd kan worden zonder iets in te" +
           " vullen, en dan zullen deze opties gekozen zijn. De keuzes zijn gelijk aan de" +
           " keuzes in het keuzemenu voor deze vraag:" +
-          "\n- o: omschrijving\n- e: extraOmschrijving\n- c: condities" +
+          "\n- o: omschrijving\n- a: achtervoegsel\n- c: condities" +
           "\n- i: inhoud\n- d: dekking" +
           "\nEen combinatie van bovenstaande opties is mogelijk. Als de default" +
           " eigenschappen omschrijving en inhoud moeten zijn, kan dus 'oi' ingevoerd worden."

@@ -21,7 +21,7 @@ async function insert(internalState) {
   process.stdout.write("\nd: dekking");
   process.stdout.write("\ni: inhoud");
   process.stdout.write("\no: omschrijving");
-  process.stdout.write("\ne: extraOmschrijving");
+  process.stdout.write("\na: achtervoegsel");
   process.stdout.write("\nWelke eigenschappen wil je toevoegen? " +
     "Voer de letters in van de eigenschappen en druk op enter." +
     " Soort wordt altijd toegevoegd. (default = " + props + ")\n");
@@ -81,16 +81,16 @@ async function insert(internalState) {
     }
   }
 
-  if (props.indexOf("e") > -1) {
+  if (props.indexOf("a") > -1) {
 
     clearView();
     showStatus(internalState.queuedObject);
-    process.stdout.write("\nWat is de extraOmschrijving? (default = geen extraOmschrijving)\n");
+    process.stdout.write("\nWat is het achtervoegsel? (default = geen achtervoegsel)\n");
 
-    const extraOmschrijving = await readLine();
+    const achtervoegsel = await readLine();
 
-    if (extraOmschrijving.trim().length !== 0) {
-      Object.assign(internalState.queuedObject, { extraOmschrijving: extraOmschrijving.trim() });
+    if (achtervoegsel.trim().length !== 0) {
+      Object.assign(internalState.queuedObject, { achtervoegsel: achtervoegsel.trim() });
     }
   }
 
