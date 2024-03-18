@@ -42,7 +42,7 @@ const { HANDLERS } = require("./src/constants");
   }
 
   if ((argv.i & argv.s) === 1) {
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.NAVIGATE));
+    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.NAVIGATE_INSERT));
   } else {
     ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.CHOOSE_MODE));
   }

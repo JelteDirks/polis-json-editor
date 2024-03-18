@@ -1,5 +1,5 @@
 const { HANDLERS } = require("../constants");
-const { clearView, showStatus, readOne } = require("../lib");
+const { clearView, readOne } = require("../lib");
 
 async function chooseMode(internalState) {
 
@@ -12,9 +12,9 @@ async function chooseMode(internalState) {
   const answer = await readOne();
 
   if (answer.trim() === "i") {
-    return HANDLERS.NAVIGATE;
+    return HANDLERS.NAVIGATE_INSERT;
   } else if (answer.trim() === "e") {
-    return HANDLERS.EDIT;
+    return HANDLERS.NAVIGATE_EDIT;
   } else {
     return HANDLERS.CHOOSE_MODE;
   }

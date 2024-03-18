@@ -34,7 +34,7 @@ async function navigate(internalState) {
       Object.assign(internalState, {
         insertAt: { direction: DIRECTION.BEFORE, index: i }
       });
-      return 2;
+      return HANDLERS.INSERT;
     } else if (answer.startsWith("j")) {
       Object.assign(internalState, {
         insertAt: { direction: DIRECTION.AFTER, index: i }

@@ -26,12 +26,14 @@ Object.keys(REGEL_SOORTEN).forEach(key => {
 });
 
 const HANDLERS = {
-  NAVIGATE: 1,
+  NAVIGATE_INSERT: 1,
   INSERT: 2,
   CONDITIES: 3,
   CACHE: 4,
   SAVETOFILE: 5,
   CHOOSE_MODE: 6,
+  NAVIGATE_EDIT: 7,
+  EDIT: 8,
 };
 
 module.exports = {

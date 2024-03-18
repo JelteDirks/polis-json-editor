@@ -46,7 +46,7 @@ async function saveToFile(internalState) {
   // reset cached objects after they are saved to file
   internalState.cachedObjects = [];
 
-  return HANDLERS.NAVIGATE;
+  return HANDLERS.NAVIGATE_INSERT;
 }
 
 module.exports = {

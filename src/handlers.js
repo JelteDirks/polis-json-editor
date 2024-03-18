@@ -5,11 +5,12 @@ const { saveToFile } = require("./handlers/saveToFile.js");
 const { condities } = require("./handlers/condities.js");
 const { HANDLERS } = require("./constants.js");
 const { chooseMode } = require("./handlers/chooseMode.js");
+const { navigateEdit } = require("./handlers/navigateEdit.js");
 
 
 const stateLibrary = [
   {
-    id: HANDLERS.NAVIGATE,
+    id: HANDLERS.NAVIGATE_INSERT,
     handler: navigate
   },
   {
@@ -31,6 +32,10 @@ const stateLibrary = [
   {
     id: HANDLERS.CHOOSE_MODE,
     handler: chooseMode
+  },
+  {
+    id: HANDLERS.NAVIGATE_EDIT,
+    handler: navigateEdit
   }
 ];
 
