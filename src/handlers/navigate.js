@@ -4,12 +4,14 @@ const { readOne } = require("../lib.js");
 async function navigate(internalState) {
 
   let i = 0;
+  const len = internalState.JSONObject.regels.length;
+
+  if (typeof len === "undefined") {
+    console.error("could not find length the regels array");
+    process.exit(24);
+  }
 
   while (1) {
-
-    if (i < 0 || i > internalState.JSONObject.regels.length) {
-      i = 0; // TODO: fix out of bounds properly
-    }
 
     const o = internalState.JSONObject.regels[i];
     const asStr = JSON.stringify(o, null, 2);
@@ -39,10 +41,10 @@ async function navigate(internalState) {
       });
       return HANDLERS.INSERT;
     } else if (answer.startsWith("l")) {
-      i = i + 1; // next index
+      i = (i + 1 + len) % len;
       continue;
     } else if (answer.startsWith("h")) {
-      i = i - 1; // next index
+      i = (i - 1 + len) % len;
       continue;
     } else if (answer.startsWith("q")) {
       console.error("aborting");
