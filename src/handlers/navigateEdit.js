@@ -75,14 +75,24 @@ function repaint(query, internalState) {
   process.stdout.write(HEADER);
   process.stdout.write(query + "\n\n");
 
+  console.log(process.stdout.rows);
+
+
   paintOptions(query, internalState);
 
   return query;
 }
 
 function paintOptions(query, internalState) {
+  let rows = process.stdout.rows - 30;
+  let nrows = 0;
   for (let i = 0; i < internalState.query.len; i++) {
-    if ((internalState.query.indexing[i].indexOf(query) >= 1) || query.length === 0) {
+    if (nrows > rows) {
+      break;
+    }
+    if ((internalState.query.indexing[i].indexOf(query) >= 1)
+      || (query.length === 0)) {
+      ++nrows;
       process.stdout.write(i + ": " +
         JSON.stringify(internalState.JSONObject.regels[i]) + "\n");
     }
