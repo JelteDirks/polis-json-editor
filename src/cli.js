@@ -24,6 +24,11 @@ function createClI(argv) {
           "de editor. Volg de instructies van de editor om naar de juiste plek" +
           " te gaan om regels toe te voegen."
       });
+      yargs.option("cache-file", {
+        type: "string",
+        describe: "Importeer regel objecten uit een cache file om mee te nemen" +
+          " in de toevoeging."
+      });
       yargs.option("default-properties", {
         type: "string",
         describe: "Default properties zijn de eigenschappen binnen een regel object" +
@@ -53,7 +58,8 @@ function createClI(argv) {
     .argv;
 }
 
-function validateCLIInput(resolvedFile, argv) {
+function validateCLIInput(argv) {
+  let resolvedFile = path.resolve(argv.file);
   let fileStats;
   try {
     fileStats = fs.statSync(resolvedFile);
@@ -76,6 +82,27 @@ function validateCLIInput(resolvedFile, argv) {
   if (path.extname(resolvedFile).toLowerCase() !== ".json") {
     console.error("Het bestand is geen geldig JSON bestand");
     process.exit(4);
+  }
+
+  if (typeof argv.cacheFile === "string") {
+    const cacheFile = path.resolve(argv.cacheFile);
+    try {
+      const cacheFileStats = fs.statSync(cacheFile);
+      if (cacheFileStats.isDirectory()) {
+        console.error("De cache file is een directory, controleer het pad.");
+        console.error(cacheFile);
+        process.exit(51);
+      }
+      if (!cacheFileStats.isFile()) {
+        console.error("De cache file is geen file, controleer het pad.");
+        console.error(cacheFile);
+        process.exit(53);
+      }
+    } catch (error) {
+      console.error("Fout tijdens het lezen van de cache file");
+      console.error(error);
+      process.exit(52);
+    }
   }
 
   if ((argv.i & argv.s) === 0) {
