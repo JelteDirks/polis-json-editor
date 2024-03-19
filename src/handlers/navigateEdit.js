@@ -94,7 +94,7 @@ function paintOptions(query, internalState) {
 
     let str = JSON.stringify(internalState.JSONObject.regels[i]).slice(0, cols);
 
-    if ((internalState.query.indexing[i].indexOf(query) >= 1)
+    if ((internalState.query.indexing[i].indexOf(query) > -1)
       || (query.length === 0)) {
       ++nrows;
       process.stdout.write(i + ": " + str + "\n");
