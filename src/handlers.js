@@ -6,6 +6,7 @@ const { condities } = require("./handlers/condities.js");
 const { HANDLERS } = require("./constants.js");
 const { chooseMode } = require("./handlers/chooseMode.js");
 const { navigateEdit } = require("./handlers/navigateEdit.js");
+const { editQueued } = require("./handlers/editQueued.js");
 
 
 const stateLibrary = [
@@ -36,6 +37,10 @@ const stateLibrary = [
   {
     id: HANDLERS.NAVIGATE_EDIT,
     handler: navigateEdit
+  },
+  {
+    id: HANDLERS.EDIT_QUEUED,
+    handler: editQueued
   }
 ];
 

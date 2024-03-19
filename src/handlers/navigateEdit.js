@@ -1,3 +1,4 @@
+const { clearView, readLine } = require("../lib");
 const { HANDLERS, ESCAPE_SEQUENCE } = require("../constants");
 
 async function navigateEdit(internalState) {
@@ -28,9 +29,27 @@ async function navigateEdit(internalState) {
     }
   });
 
-  const result = await runningQuery(internalState);
+  const chosenQuery = await runningQuery(internalState);
+  clearView();
 
-  return HANDLERS.CHOOSE_MODE;
+  process.stdout.write("Type het nummer van het object wat je wil wijzigen en "
+    + "druk op enter.\n");
+  paintOptions(chosenQuery, internalState);
+
+  const answer = await readLine();
+
+  if (!internalState.JSONObject.regels[answer.trim()]) {
+    return HANDLERS.NAVIGATE_EDIT;
+  }
+
+  Object.assign(internalState, {
+    queuedObject: internalState.JSONObject.regels[answer.trim()],
+    editAt: answer.trim()
+  });
+
+  delete internalState.query; // reset to prevent cluttering?
+
+  return HANDLERS.EDIT_QUEUED;
 }
 
 async function runningQuery(internalState) {
@@ -44,18 +63,15 @@ async function runningQuery(internalState) {
     const onData = async (data) => {
       switch (data) {
         case "\u0003":
-          process.exit(); break;
+          process.exit();
         case "\u007f":
           query = repaint(query.slice(0, -1), internalState); break;
         case "\r":
-          console.log("enter pressed");
           process.stdin.removeListener("data", onData);
           process.stdin.setRawMode(false);
-          process.nextTick(() => resolve(query));
-          break;
+          resolve(query); break;
         default:
-          query = repaint(query + data, internalState);
-          break;
+          query = repaint(query + data, internalState); break;
       }
     }
 
