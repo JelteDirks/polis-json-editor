@@ -1,5 +1,4 @@
 const { HANDLERS, ESCAPE_SEQUENCE } = require("../constants");
-const { clearView } = require("../lib");
 
 async function navigateEdit(internalState) {
   const len = internalState.JSONObject.regels.length;
@@ -70,13 +69,12 @@ je het correct label in beeld ziet. Druk dan op enter en vul bij de volgende
 vraag het getal in van het regel object wat je wil wijzigen.
 `;
 
-const ROW_OFFSET = 6; // specific for this function and header
+const ROW_OFFSET = 7; // specific for this function and header
+const COL_OFFSET = 8;
+
 function repaint(query, internalState) {
   process.stdout.write(HEADER);
   process.stdout.write(query + "\n\n");
-
-  console.log(process.stdout.rows);
-
 
   paintOptions(query, internalState);
 
@@ -84,18 +82,27 @@ function repaint(query, internalState) {
 }
 
 function paintOptions(query, internalState) {
-  let rows = process.stdout.rows - 30;
+  let rows = process.stdout.rows - ROW_OFFSET;
+  let cols = process.stdout.columns - COL_OFFSET;
   let nrows = 0;
+  let truncated = false;
   for (let i = 0; i < internalState.query.len; i++) {
     if (nrows > rows) {
+      truncated = true;
       break;
     }
+
+    let str = JSON.stringify(internalState.JSONObject.regels[i]).slice(0, cols);
+
     if ((internalState.query.indexing[i].indexOf(query) >= 1)
       || (query.length === 0)) {
       ++nrows;
-      process.stdout.write(i + ": " +
-        JSON.stringify(internalState.JSONObject.regels[i]) + "\n");
+      process.stdout.write(i + ": " + str + "\n");
     }
+  }
+
+  if (truncated) {
+    process.stdout.write("...meer regels zijn verborgen...");
   }
 }
 
