@@ -1,7 +1,7 @@
-const { DIRECTION, ESCAPE_SEQUENCE, HANDLERS } = require("../constants.js");
-const { readOne } = require("../lib.js");
+import { DIRECTION, ESCAPE_SEQUENCE, HANDLERS } from "../constants.js";
+import { readOne } from "../lib.js";
 
-async function navigate(internalState) {
+export async function navigate(internalState) {
 
   let i = 0;
   const len = internalState.JSONObject.regels.length;
@@ -54,7 +54,3 @@ async function navigate(internalState) {
 
   return HANDLERS.INSERT;
 }
-
-module.exports = {
-  navigate
-};

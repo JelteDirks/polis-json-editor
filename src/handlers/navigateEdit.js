@@ -1,7 +1,7 @@
-const { clearView, readLine } = require("../lib");
-const { HANDLERS, ESCAPE_SEQUENCE } = require("../constants");
+import { clearView, readLine } from "../lib.js";
+import { HANDLERS, ESCAPE_SEQUENCE } from "../constants.js";
 
-async function navigateEdit(internalState) {
+export async function navigateEdit(internalState) {
   const len = internalState.JSONObject.regels.length;
   const indexing = new Array(len);
 
@@ -120,5 +120,3 @@ function paintOptions(query, internalState) {
     process.stdout.write("...meer regels zijn verborgen...");
   }
 }
-
-module.exports = { navigateEdit };

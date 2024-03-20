@@ -1,6 +1,6 @@
-const { ESCAPE_SEQUENCE } = require("./constants");
+import { ESCAPE_SEQUENCE } from "./constants.js";
 
-async function readOne() {
+export async function readOne() {
   return new Promise((resolve) => {
     process.stdin.setEncoding("utf8");
     process.stdin.setRawMode(true);
@@ -18,7 +18,7 @@ async function readOne() {
   });
 }
 
-async function readLine() {
+export async function readLine() {
   return new Promise((resolve) => {
     process.stdin.setEncoding("utf8");
     process.stdin.setRawMode(false);
@@ -31,30 +31,21 @@ async function readLine() {
   });
 }
 
-async function clearView() {
+export async function clearView() {
   process.stdout.write(ESCAPE_SEQUENCE.CLEAR_TERM);
 }
 
-async function sleep(ms) {
+export async function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }
 
-function showStatus(regel) {
+export function showStatus(regel) {
   process.stdout.write("Huidig object:\n");
   process.stdout.write(JSON.stringify(regel, null, 2));
 }
 
-function deepClone(obj) {
+export function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
-
-module.exports = {
-  sleep,
-  readOne,
-  readLine,
-  clearView,
-  showStatus,
-  deepClone
-};

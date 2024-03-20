@@ -1,6 +1,6 @@
-const { clearView, readLine } = require("../lib");
+import { clearView, readLine } from "../lib.js";
 
-async function editQueued(internalState) {
+export async function editQueued(internalState) {
 
   let localRef = internalState.JSONObject.regels[internalState.editAt];
 
@@ -19,5 +19,3 @@ async function editQueued(internalState) {
 
   process.exit();
 }
-
-module.exports = { editQueued };

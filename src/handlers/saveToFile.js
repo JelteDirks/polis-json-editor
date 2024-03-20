@@ -1,9 +1,9 @@
-const { writeFileSync, unlinkSync } = require("node:fs");
-const { clearView, readOne } = require("../lib");
-const path = require("node:path");
-const { HANDLERS } = require("../constants");
+import { writeFileSync, unlinkSync } from "node:fs";
+import { clearView, readOne } from "../lib.js";
+import { resolve } from "node:path";
+import { HANDLERS } from "../constants.js";
 
-async function saveToFile(internalState) {
+export async function saveToFile(internalState) {
   clearView();
   process.stdout.write("De volgende regel objecten worden opgeslagen\n");
   console.log(internalState.cachedObjects);
@@ -22,7 +22,7 @@ async function saveToFile(internalState) {
   const answer = await readOne();
 
   if (answer.trim() === "n") {
-    const newPath = path.resolve("nieuw." + internalState.argv.file);
+    const newPath = resolve("nieuw." + internalState.argv.file);
     writeFileSync(newPath, data, {
       flag: "w" // create new file
     });
@@ -48,7 +48,3 @@ async function saveToFile(internalState) {
 
   return HANDLERS.NAVIGATE_INSERT;
 }
-
-module.exports = {
-  saveToFile
-};

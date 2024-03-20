@@ -1,7 +1,7 @@
-const { HANDLERS } = require("../constants");
-const { clearView, readOne } = require("../lib");
+import { HANDLERS } from "../constants.js";
+import { clearView, readOne } from "../lib.js";
 
-async function chooseMode(internalState) {
+export async function chooseMode(internalState) {
 
   clearView()
 
@@ -19,6 +19,3 @@ async function chooseMode(internalState) {
     return HANDLERS.CHOOSE_MODE;
   }
 }
-
-
-module.exports = { chooseMode };

@@ -1,18 +1,18 @@
 #!/opt/homebrew/bin/node
 
-const { HANDLERS } = require("./src/constants");
+import { createClI, validateCLIInput } from "./src/cli.js";
+import { resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { nextHandler } from "./src/handlers.js";
+import { HANDLERS } from "./src/constants.js";
 
 (async () => {
-  const { createClI, validateCLIInput } = require("./src/cli");
-  const path = require("node:path");
-  const { readFileSync } = require("node:fs");
-  const { nextHandler } = require("./src/handlers");
 
   const argv = createClI(process.argv)
   validateCLIInput(argv);
 
-  const resolvedFile = path.resolve(argv.file);
-  const JSONObject = require(resolvedFile);
+  const resolvedFile = resolve(argv.file);
+  const JSONObject = JSON.parse(readFileSync(resolvedFile));
 
   let stateNumber = -1;
   let stateHandler = () => { };
@@ -23,7 +23,7 @@ const { HANDLERS } = require("./src/constants");
   };
 
   if (typeof argv.cacheFile === "string") {
-    let resolvedCacheFile = path.resolve(argv.cacheFile);
+    let resolvedCacheFile = resolve(argv.cacheFile);
     try {
       let cachedObjects = JSON.parse(readFileSync(resolvedCacheFile));
       if (!(cachedObjects instanceof Array)) {
@@ -42,14 +42,14 @@ const { HANDLERS } = require("./src/constants");
   }
 
   if ((argv.i & argv.s) === 1) {
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.NAVIGATE_INSERT));
+    ({ handler: stateHandler } = nextHandler(HANDLERS.NAVIGATE_INSERT));
   } else {
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(HANDLERS.CHOOSE_MODE));
+    ({ handler: stateHandler } = nextHandler(HANDLERS.CHOOSE_MODE));
   }
 
   while (1) {
     stateNumber = await stateHandler(internalState);
-    ({ stateNumber: id, handler: stateHandler } = nextHandler(stateNumber));
+    ({ handler: stateHandler } = nextHandler(stateNumber));
   }
 
   console.log(JSON.stringify(JSONObject, null, 2).slice(0, 100));

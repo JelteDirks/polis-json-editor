@@ -1,13 +1,13 @@
-const DIRECTION = {
+export const DIRECTION = {
   BEFORE: 0,
   AFTER: 1,
 };
 
-const ESCAPE_SEQUENCE = {
+export const ESCAPE_SEQUENCE = {
   CLEAR_TERM: "\x1Bc"
 };
 
-const REGEL_SOORTEN = {
+export const REGEL_SOORTEN = {
   "Standaard": 1,
   "Bedrag": 2,
   "Tekst": 3,
@@ -19,13 +19,13 @@ const REGEL_SOORTEN = {
   "Spacer": 9
 };
 
-const SOORT_LOOKUP = {};
+export const SOORT_LOOKUP = {};
 
 Object.keys(REGEL_SOORTEN).forEach(key => {
   SOORT_LOOKUP[REGEL_SOORTEN[key]] = key;
 });
 
-const HANDLERS = {
+export const HANDLERS = {
   NAVIGATE_INSERT: 1,
   INSERT: 2,
   CONDITIES: 3,
@@ -34,12 +34,4 @@ const HANDLERS = {
   CHOOSE_MODE: 6,
   NAVIGATE_EDIT: 7,
   EDIT_QUEUED: 9,
-};
-
-module.exports = {
-  DIRECTION: DIRECTION,
-  ESCAPE_SEQUENCE: ESCAPE_SEQUENCE,
-  REGEL_SOORTEN: REGEL_SOORTEN,
-  SOORT_LOOKUP: SOORT_LOOKUP,
-  HANDLERS: HANDLERS
 };

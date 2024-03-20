@@ -1,9 +1,9 @@
-const { writeFile } = require("node:fs");
-const { clearView, showStatus, readOne, deepClone } = require("../lib");
-const path = require("node:path");
-const { HANDLERS } = require("../constants");
+import { writeFile } from "node:fs";
+import { clearView, showStatus, readOne, deepClone } from "../lib.js";
+import { resolve } from "node:path";
+import { HANDLERS } from "../constants.js";
 
-async function cache(internalState) {
+export async function cache(internalState) {
   if (!internalState.queuedObject) {
     console.error("should have queued object by now");
     process.exit();
@@ -25,7 +25,7 @@ async function cache(internalState) {
   process.stdout.write("\nn: Nee ik wil geen object meer toevoegen");
   process.stdout.write("\nWil je nog een object toevoegen? (default = j)\n");
 
-  internalState.cacheFile = path.resolve(internalState.argv.file + ".cache");
+  internalState.cacheFile = resolve(internalState.argv.file + ".cache");
 
   const data = JSON.stringify(internalState.cachedObjects);
 
@@ -45,7 +45,3 @@ async function cache(internalState) {
 
   return HANDLERS.INSERT;
 }
-
-module.exports = {
-  cache
-};

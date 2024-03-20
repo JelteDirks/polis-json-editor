@@ -1,12 +1,12 @@
-const { navigate } = require("./handlers/navigate.js");
-const { insert } = require("./handlers/insert.js");
-const { cache } = require("./handlers/cache.js");
-const { saveToFile } = require("./handlers/saveToFile.js");
-const { condities } = require("./handlers/condities.js");
-const { HANDLERS } = require("./constants.js");
-const { chooseMode } = require("./handlers/chooseMode.js");
-const { navigateEdit } = require("./handlers/navigateEdit.js");
-const { editQueued } = require("./handlers/editQueued.js");
+import { navigate } from "./handlers/navigate.js";
+import { insert } from "./handlers/insert.js";
+import { cache } from "./handlers/cache.js";
+import { saveToFile } from "./handlers/saveToFile.js";
+import { condities } from "./handlers/condities.js";
+import { HANDLERS } from "./constants.js";
+import { chooseMode } from "./handlers/chooseMode.js";
+import { navigateEdit } from "./handlers/navigateEdit.js";
+import { editQueued } from "./handlers/editQueued.js";
 
 
 const stateLibrary = [
@@ -44,7 +44,7 @@ const stateLibrary = [
   }
 ];
 
-function nextHandler(id) {
+export function nextHandler(id) {
   for (let i = 0; i < stateLibrary.length; i++) {
     if (stateLibrary[i].id === id) {
       return stateLibrary[i];
@@ -54,7 +54,3 @@ function nextHandler(id) {
   console.error("geen state met id:", id);
   process.exit(22);
 }
-
-module.exports = {
-  nextHandler: nextHandler
-};

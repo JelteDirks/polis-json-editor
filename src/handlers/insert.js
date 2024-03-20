@@ -1,7 +1,7 @@
-const { REGEL_SOORTEN, SOORT_LOOKUP, HANDLERS } = require("../constants");
-const { clearView, readLine, readOne, showStatus } = require("../lib");
+import { REGEL_SOORTEN, SOORT_LOOKUP, HANDLERS } from "../constants.js";
+import { clearView, readLine, readOne, showStatus } from "../lib.js";
 
-async function insert(internalState) {
+export async function insert(internalState) {
 
   if (!internalState.insertAt) {
     console.error("should have internalState.insertAt");
@@ -100,7 +100,3 @@ async function insert(internalState) {
 
   return HANDLERS.CACHE;
 }
-
-module.exports = {
-  insert
-};

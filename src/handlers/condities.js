@@ -1,7 +1,7 @@
-const { HANDLERS } = require("../constants");
-const { clearView, showStatus, readOne, readLine } = require("../lib");
+import { HANDLERS } from "../constants.js";
+import { clearView, showStatus, readOne, readLine } from "../lib.js";
 
-async function condities(internalState) {
+export async function condities(internalState) {
   Object.assign(internalState.queuedObject, {
     condities: []
   });
@@ -184,8 +184,3 @@ function getlabels(str) {
 
   return labels;
 }
-
-
-module.exports = {
-  condities
-};
