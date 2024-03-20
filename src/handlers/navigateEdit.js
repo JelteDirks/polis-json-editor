@@ -43,7 +43,6 @@ async function navigateEdit(internalState) {
   }
 
   Object.assign(internalState, {
-    queuedObject: internalState.JSONObject.regels[answer.trim()],
     editAt: answer.trim()
   });
 
