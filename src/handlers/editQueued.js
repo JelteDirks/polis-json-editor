@@ -33,7 +33,8 @@ export async function editQueued(internalState) {
 
   clearView();
   process.stdout.write(JSON.stringify(localRef, null, 2));
-  process.stdout.write("\nj: Ja het object is correct zo");
+  process.stdout.write("\nj: Ja het object is correct zo? " +
+    "(je overschrijft meteen het bestand)");
   process.stdout.write("\nn: Nee, ik wil nog een keer wijzigen");
   process.stdout.write("\nIs het object correct? (default = j)\n");
 
