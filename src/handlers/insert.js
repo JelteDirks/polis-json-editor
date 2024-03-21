@@ -94,9 +94,46 @@ export async function insert(internalState) {
     }
   }
 
+  let change = new String();
+  while (1) {
+    clearView();
+    showStatus(internalState.queuedObject);
+    process.stdout.write("\nj: Ja ik wil nog een property wijzigen");
+    process.stdout.write("\nn: Nee het object is goed zo");
+    process.stdout.write("\nWil je nog een property wijzigen? (default = n)\n");
+
+    change = await readOne();
+
+    if (change.trim() === "j") {
+      await wijzigObjectByRef(internalState, internalState.queuedObject);
+    } else { break; }
+  }
+
   if (props.indexOf("c") > -1) { // conditions shouuld be added
     return HANDLERS.CONDITIES;
   }
 
   return HANDLERS.CACHE;
+}
+
+async function wijzigObjectByRef(internalState, objectRef) {
+  clearView();
+  showStatus(objectRef);
+  process.stdout.write("\nAlleen strings kunnen hier gewijzigd worden.");
+  process.stdout.write("\nTyp de naam van de eigenschap wat gewijzigd moet worden:\n");
+
+  const prop = (await readLine()).trim();
+
+  if (typeof objectRef[prop] === "undefined") {
+    clearView();
+    return wijzigObjectByRef(internalState, objectRef);
+  }
+
+  process.stdout.write("\nTyp de nieuwe waarde van de eigenschap:\n");
+
+  const val = (await readLine()).trim();
+
+  Object.assign(objectRef, {
+    [prop]: val
+  });
 }
