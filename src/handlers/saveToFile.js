@@ -35,13 +35,15 @@ export async function saveToFile(internalState) {
     console.log("Bestand overschreven:", internalState.argv.file);
   }
 
-  unlinkSync(internalState.cacheFile, (err) => {
-    if (err) {
-      console.error("problem removing cached file after saving");
-      console.error(err);
-      process.exit(10);
-    }
-  });
+  if (typeof internalState.cacheFile === "string") {
+    unlinkSync(internalState.cacheFile, (err) => {
+      if (err) {
+        console.error("problem removing cached file after saving");
+        console.error(err);
+        process.exit(10);
+      }
+    });
+  }
 
   // reset cached objects after they are saved to file
   internalState.cachedObjects = [];
