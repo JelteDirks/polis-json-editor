@@ -22,7 +22,7 @@ export async function saveToFile(internalState) {
   const answer = await readOne();
 
   if (answer.trim() === "n") {
-    const newPath = resolve("nieuw." + internalState.argv.file);
+    const newPath = resolve(internalState.argv.file + ".nieuw");
     writeFileSync(newPath, data, {
       flag: "w" // create new file
     });
