@@ -33,5 +33,6 @@ export const HANDLERS = {
   SAVETOFILE: 5,
   CHOOSE_MODE: 6,
   NAVIGATE_EDIT: 7,
+  DELETE_MODE: 8,
   EDIT_QUEUED: 9,
 };

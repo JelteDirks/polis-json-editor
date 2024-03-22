@@ -7,6 +7,7 @@ import { HANDLERS } from "./constants.js";
 import { chooseMode } from "./handlers/chooseMode.js";
 import { navigateEdit } from "./handlers/navigateEdit.js";
 import { editQueued } from "./handlers/editQueued.js";
+import { deleteMode } from "./handlers/deleteMode.js";
 
 
 const stateLibrary = [
@@ -37,6 +38,10 @@ const stateLibrary = [
   {
     id: HANDLERS.NAVIGATE_EDIT,
     handler: navigateEdit
+  },
+  {
+    id: HANDLERS.DELETE_MODE,
+    handler: deleteMode
   },
   {
     id: HANDLERS.EDIT_QUEUED,
