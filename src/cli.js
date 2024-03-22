@@ -105,3 +105,7 @@ export function validateCLIInput(argv) {
     }
   }
 }
+
+function deez(a, b) {
+  return a + b;
+}

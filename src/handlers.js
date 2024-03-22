@@ -1,4 +1,4 @@
-import { navigate } from "./handlers/navigate.js";
+import { navigateInsert } from "./handlers/navigate.js";
 import { insert } from "./handlers/insert.js";
 import { cache } from "./handlers/cache.js";
 import { saveToFile } from "./handlers/saveToFile.js";
@@ -12,7 +12,7 @@ import { editQueued } from "./handlers/editQueued.js";
 const stateLibrary = [
   {
     id: HANDLERS.NAVIGATE_INSERT,
-    handler: navigate
+    handler: navigateInsert
   },
   {
     id: HANDLERS.INSERT,

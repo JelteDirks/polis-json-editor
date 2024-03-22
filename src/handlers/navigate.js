@@ -1,7 +1,7 @@
 import { DIRECTION, ESCAPE_SEQUENCE, HANDLERS } from "../constants.js";
 import { readOne } from "../lib.js";
 
-export async function navigate(internalState) {
+export async function navigateInsert(internalState) {
 
   let i = 0;
   const len = internalState.JSONObject.regels.length;

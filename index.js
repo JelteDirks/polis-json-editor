@@ -52,7 +52,5 @@ import { HANDLERS } from "./src/constants.js";
     ({ handler: stateHandler } = nextHandler(stateNumber));
   }
 
-  console.log(JSON.stringify(JSONObject, null, 2).slice(0, 100));
-
   return 0;
 })();
