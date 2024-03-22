@@ -22,31 +22,34 @@ export async function navigateInsert(internalState) {
     process.stdout.write("j: ik wil onder deze regel beginnen met invoegen\n");
     process.stdout.write("l: ik wil de volgende regel bekijken\n");
     process.stdout.write("h: ik wil de vorige regel bekijken\n");
+    process.stdout.write("e: ik wil liever een object aanpassen\n");
     process.stdout.write("q: abort\n");
 
     process.stdin.read();
 
     const answer = await readOne();
 
-    console.dir(answer);
+    if (answer.trim() === "e") {
+      return HANDLERS.NAVIGATE_EDIT;
+    }
 
-    if (answer.startsWith("k")) {
+    if (answer.trim() === "k") {
       Object.assign(internalState, {
         insertAt: { direction: DIRECTION.BEFORE, index: i }
       });
       return HANDLERS.INSERT;
-    } else if (answer.startsWith("j")) {
+    } else if (answer.trim() === "j") {
       Object.assign(internalState, {
         insertAt: { direction: DIRECTION.AFTER, index: i }
       });
       return HANDLERS.INSERT;
-    } else if (answer.startsWith("l")) {
+    } else if (answer.trim() === "l") {
       i = (i + 1 + len) % len;
       continue;
-    } else if (answer.startsWith("h")) {
+    } else if (answer.trim() === "h") {
       i = (i - 1 + len) % len;
       continue;
-    } else if (answer.startsWith("q")) {
+    } else if (answer.trim() === "q") {
       console.error("aborting");
       process.exit(7);
     }
