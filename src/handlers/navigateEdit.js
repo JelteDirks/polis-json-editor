@@ -1,5 +1,6 @@
 import { clearView, readLine } from "../lib.js";
 import { HANDLERS, ESCAPE_SEQUENCE } from "../constants.js";
+import chalk from "chalk";
 
 export async function navigateEdit(internalState) {
   const len = internalState.JSONObject.regels.length;
@@ -13,11 +14,15 @@ export async function navigateEdit(internalState) {
     let obj = internalState.JSONObject.regels[j];
 
     if (typeof obj.inhoud === "string") {
-      indexing[j] += obj.inhoud;
+      indexing[j] += obj.inhoud.toLowerCase();
     }
 
     if (typeof obj.omschrijving === "string") {
-      indexing[j] += " " + obj.omschrijving;
+      indexing[j] += " " + obj.omschrijving.toLowerCase();
+    }
+
+    if (typeof obj.notities === "string") {
+      indexing[j] += " " + obj.notities.toLowerCase();
     }
   }
 
@@ -80,7 +85,7 @@ async function runningQuery(internalState) {
 
 const HEADER = ESCAPE_SEQUENCE.CLEAR_TERM +
   `Je bent nu in zoek mode. Dit betekent dat je tekst kan blijven typen totdat
-je het correct label in beeld ziet. Druk dan op enter en vul bij de volgende
+je het correcte label in beeld ziet. Druk dan op enter en vul bij de volgende
 vraag het getal in van het regel object wat je wil wijzigen.
 `;
 
@@ -89,9 +94,9 @@ const COL_OFFSET = 8;
 
 function repaint(query, internalState) {
   process.stdout.write(HEADER);
-  process.stdout.write(query + "\n\n");
-
-  paintOptions(query, internalState);
+  process.stdout.write("Je zoekterm: ");
+  console.log(chalk.green(query));
+  paintOptions(query.toLowerCase(), internalState);
 
   return query;
 }
