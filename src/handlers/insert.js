@@ -44,17 +44,20 @@ export async function insert(internalState) {
 
   clearView()
   showStatus(internalState.queuedObject);
+
+  const defaultSoort = "1";
+
   Object.keys(REGEL_SOORTEN).forEach((key) => {
     process.stdout.write(`\n${REGEL_SOORTEN[key]}: ${key}`);
   });
-  process.stdout.write("\n\nWat is de soort? (default = 1)\n");
+  process.stdout.write("\n\nWat is de soort? (default = " + defaultSoort + ")\n");
 
   const soort = await readOne();
 
   if ((soort.trim().length !== 0) && (typeof SOORT_LOOKUP[soort.trim()] === "string")) {
     Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP[soort.trim()] });
   } else {
-    Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP["1"] });
+    Object.assign(internalState.queuedObject, { soort: SOORT_LOOKUP[defaultSoort] });
   }
 
   if (props.indexOf("d") > -1) {
