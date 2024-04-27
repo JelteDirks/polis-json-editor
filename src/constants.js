@@ -1,3 +1,7 @@
+export const ERRNO = {
+  BADCOND: 1,
+};
+
 export const DIRECTION = {
   BEFORE: 0,
   AFTER: 1,

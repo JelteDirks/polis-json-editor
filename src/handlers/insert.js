@@ -1,5 +1,8 @@
+import chalk from "chalk";
 import { REGEL_SOORTEN, SOORT_LOOKUP, HANDLERS } from "../constants.js";
 import { clearView, readLine, readOne, showStatus } from "../lib.js";
+
+const red = chalk.red;
 
 export async function insert(internalState) {
 
@@ -16,6 +19,7 @@ export async function insert(internalState) {
   internalState.queuedObject = {};
 
   clearView()
+  process.stdout.write(red("\nVoer op enig moment !R (bij teksten) of ! (bij letters) in om opnieuw te beginnen\n"));
   showStatus(internalState.queuedObject);
   process.stdout.write("\nc: condities");
   process.stdout.write("\nd: dekking");
@@ -27,6 +31,9 @@ export async function insert(internalState) {
     " Soort wordt altijd toegevoegd. (default = " + props + ")\n");
 
   let answer = await readLine();
+  if (answer.indexOf("!R") > -1) {
+    return HANDLERS.INSERT;
+  }
 
   if (answer.trim().length !== 0) {
     props = answer;
@@ -38,6 +45,9 @@ export async function insert(internalState) {
     process.stdout.write("\nWat is de omschrijving van de regel?\n");
 
     const omschrijving = await readLine();
+    if (omschrijving.indexOf("!R") > -1) {
+      return HANDLERS.INSERT;
+    }
 
     Object.assign(internalState.queuedObject, { omschrijving: omschrijving.trim() });
   }
@@ -66,6 +76,9 @@ export async function insert(internalState) {
     process.stdout.write("\n\nWat is de dekking? (default = geen dekking)\n");
 
     const dekking = await readLine();
+    if (dekking.indexOf("!R") > -1) {
+      return HANDLERS.INSERT;
+    }
 
     if (dekking.trim().length !== 0) {
       Object.assign(internalState.queuedObject, { dekking: dekking.trim() });
@@ -78,6 +91,10 @@ export async function insert(internalState) {
     process.stdout.write("\n\nWat is de inhoud? (default = geen inhoud)\n");
 
     const inhoud = await readLine();
+    if (inhoud.indexOf("!R") > -1) {
+      return HANDLERS.INSERT;
+    }
+
 
     if (inhoud.trim().length !== 0) {
       Object.assign(internalState.queuedObject, { inhoud: inhoud.trim() });
@@ -91,6 +108,9 @@ export async function insert(internalState) {
     process.stdout.write("\nWat is het achtervoegsel? (default = geen achtervoegsel)\n");
 
     const achtervoegsel = await readLine();
+    if (achtervoegsel.indexOf("!R") > -1) {
+      return HANDLERS.INSERT;
+    }
 
     if (achtervoegsel.trim().length !== 0) {
       Object.assign(internalState.queuedObject, { achtervoegsel: achtervoegsel.trim() });
@@ -106,6 +126,9 @@ export async function insert(internalState) {
     process.stdout.write("\nWil je nog een property wijzigen? (default = n)\n");
 
     change = await readOne();
+    if (change.indexOf("!") > -1) {
+      return HANDLERS.INSERT;
+    }
 
     if (change.trim() === "j") {
       await wijzigObjectByRef(internalState, internalState.queuedObject);
@@ -126,6 +149,9 @@ async function wijzigObjectByRef(internalState, objectRef) {
   process.stdout.write("\nTyp de naam van de eigenschap wat gewijzigd moet worden:\n");
 
   const prop = (await readLine()).trim();
+  if (prop.indexOf("!R") > -1) {
+    return HANDLERS.INSERT;
+  }
 
   if (typeof objectRef[prop] === "undefined") {
     clearView();
@@ -135,6 +161,9 @@ async function wijzigObjectByRef(internalState, objectRef) {
   process.stdout.write("\nTyp de nieuwe waarde van de eigenschap:\n");
 
   const val = (await readLine()).trim();
+  if (val.indexOf("!R") > -1) {
+    return HANDLERS.INSERT;
+  }
 
   Object.assign(objectRef, {
     [prop]: val

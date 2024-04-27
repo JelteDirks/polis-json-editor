@@ -1,5 +1,8 @@
-import { HANDLERS } from "../constants.js";
+import { ERRNO, HANDLERS } from "../constants.js";
 import { clearView, showStatus, readOne, readLine } from "../lib.js";
+import chalk from "chalk";
+
+const red = chalk.red;
 
 export async function condities(internalState) {
   Object.assign(internalState.queuedObject, {
@@ -7,6 +10,7 @@ export async function condities(internalState) {
   });
 
   clearView();
+  process.stdout.write(red("\nVoer op enig moment !R (bij teksten) of ! (bij letters) in om opnieuw te beginnen\n"));
   showStatus(internalState.queuedObject);
   process.stdout.write("\ne: EN conditie\no: OF conditie ");
   process.stdout.write("\nWelk soort conditie wil je toevoegen? (default = EN conditie)\n");
@@ -32,11 +36,20 @@ export async function condities(internalState) {
       " Typ alle letters die van toepassing zijn: (default = ml)\n");
 
     const flags = await readLine();
+    if (flags.indexOf("!R") > -1) {
+      return HANDLERS.CONDITIES;
+    }
 
     if (flags.trim().length === 0) {
-      await maakConditie("ml", internalState);
+      const errno = await maakConditie("ml", internalState);
+      if (errno === ERRNO.BADCOND) {
+        return HANDLERS.CONDITIES;
+      }
     } else {
-      await maakConditie(flags.trim(), internalState);
+      const errno = await maakConditie(flags.trim(), internalState);
+      if (errno === ERRNO.BADCOND) {
+        return HANDLERS.CONDITIES;
+      }
     }
 
     clearView();
@@ -46,6 +59,9 @@ export async function condities(internalState) {
     process.stdout.write("\nWil je meer condities toevoegen? (default = n)\n");
 
     let answer = await readOne();
+    if (answer.indexOf("!") > -1) {
+      return HANDLERS.CONDITIES;
+    }
 
     if (answer.trim() !== "j") {
       break;
@@ -65,6 +81,9 @@ async function maakConditie(flags, internalState) {
       "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: P302 P353 P380)\n");
 
     let answer = await readLine();
+    if (answer.indexOf("!R") > -1) {
+      return ERRNO.BADCOND;
+    }
 
     Object.assign(conditieObj, {
       maatschappijen: answer.trim().split(" ")
@@ -78,6 +97,9 @@ async function maakConditie(flags, internalState) {
       "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: 02030 02031)\n");
 
     let answer = await readLine();
+    if (answer.indexOf("!R") > -1) {
+      return ERRNO.BADCOND;
+    }
 
     Object.assign(conditieObj, {
       dekkingen: answer.trim().split(" ")
@@ -91,6 +113,9 @@ async function maakConditie(flags, internalState) {
       "conditie? Gebruik een spatie om ze te scheiden. (Voorbeeld: 01010 01100)\n");
 
     let answer = await readLine();
+    if (answer.indexOf("!R") > -1) {
+      return ERRNO.BADCOND;
+    }
 
     Object.assign(conditieObj, {
       branches: answer.trim().split(" ")
@@ -104,6 +129,9 @@ async function maakConditie(flags, internalState) {
       "conditie? Gebruik een | om de waardes te scheiden. " +
       "(Voorbeeld: 0,00|Zie polisvoorwaarden|Deez nuts)\n");
     let answer = await readLine();
+    if (answer.indexOf("!R") > -1) {
+      return ERRNO.BADCOND;
+    }
     Object.assign(conditieObj, {
       waardes: answer.trim().split("|")
     });
@@ -119,12 +147,18 @@ async function maakConditie(flags, internalState) {
       " (default = j)\n");
 
     let answer = await readOne();
+    if (answer.indexOf("!") > -1) {
+      return ERRNO.BADCOND;
+    }
 
     if (answer.trim() === "n") {
       process.stdout.write("Ok, voer de labels in met een spatie ertussen. " +
         "(voorbeeld:10142o 10039 10001c)\n");
 
       let answer = await readLine();
+      if (answer.indexOf("!R") > -1) {
+        return ERRNO.BADCOND;
+      }
 
       Object.assign(conditieObj, {
         labels: answer.trim().split(" ")
@@ -148,6 +182,9 @@ async function maakConditie(flags, internalState) {
   process.stdout.write("\nn: Nee dit conditie object wil ik opnieuw doen");
   process.stdout.write("\nIs dit conditie object correct? (default = j)\n");
   let answer = await readOne();
+  if (answer.indexOf("!") > -1) {
+    return ERRNO.BADCOND;
+  }
 
   if (answer.trim() === "n") {
     return maakConditie(flags, internalState);
